@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.MONGODB_URI);
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/googlebooks";
+
+mongoose.connect(uri);
 
 mongoose.connection.once("open", async () => {
+  console.log("Connected to the Database");
+
   const kittySchema = new mongoose.Schema({
     name: String,
   });
@@ -10,8 +14,6 @@ mongoose.connection.once("open", async () => {
   const Kitten = mongoose.model("Kitten", kittySchema);
 
   await Kitten.create({ name: "Silence" });
-
-  console.log("Connected to the Database");
 });
 
 module.exports = mongoose.connection;
