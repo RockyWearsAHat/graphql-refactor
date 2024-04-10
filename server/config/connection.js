@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-mongoose.connect(
-  process.env.REACT_APP_MONGODB_URI || "mongodb://127.0.0.1:27017/googlebooks"
-);
+const connectionURI = process.env.MONGODB_URI
+  ? process.env.MONGODB_URI
+  : "mongodb://127.0.0.1:27017/googlebooks";
+mongoose.connect(connectionURI);
 
 mongoose.connection.once("open", async () => {
   const kittySchema = new mongoose.Schema({
